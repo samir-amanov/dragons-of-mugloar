@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.samir.dragons.service.GameService;
+import com.samir.dragons.service.game.GameService;
 
 @SpringBootApplication
 public class DragonsApplication {

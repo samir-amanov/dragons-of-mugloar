@@ -1,4 +1,4 @@
-package com.samir.dragons.service;
+package com.samir.dragons.service.ads;
 
 import java.util.Comparator;
 import java.util.List;

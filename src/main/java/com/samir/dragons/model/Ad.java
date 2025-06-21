@@ -15,7 +15,7 @@ public class Ad {
 	private String message;
 	private int reward;
 	private int expiresIn;
-	private String encrypted;
+	private Integer encrypted;
 	private String probability;
 
 	@Setter

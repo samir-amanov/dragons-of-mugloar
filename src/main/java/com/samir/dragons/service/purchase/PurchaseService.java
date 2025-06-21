@@ -1,4 +1,4 @@
-package com.samir.dragons.service;
+package com.samir.dragons.service.purchase;
 
 import java.util.List;
 
@@ -21,19 +21,19 @@ public class PurchaseService {
 		this.client = client;
 	}
 
-	public void tryBuyHealingPotion(GameState gameState) {
+	public void tryBuyItem(GameState gameState) {
 		if (gameState.getLives() <= 2 && gameState.getGold() >= 50) {
-			tryBuyItem(gameState, "hpot");
+			buyItem(gameState, "hpot");
 		}
-	}
-
-	public void tryBuyTricks(GameState gameState) {
 		if (gameState.getGold() >= 250) {
-			tryBuyItem(gameState, "tricks");
+			buyItem(gameState, "wingpot");
+		}
+		if (gameState.getGold() >= 450) {
+			buyItem(gameState, "rf");
 		}
 	}
 
-	private void tryBuyItem(GameState gameState, String itemId) {
+	private void buyItem(GameState gameState, String itemId) {
 		List<ShopItem> items = client.fetchShopItems(gameState.getGameId());
 		items.stream()
 				.filter(item -> itemId.equals(item.getId()) && item.getCost() <= gameState.getGold())
