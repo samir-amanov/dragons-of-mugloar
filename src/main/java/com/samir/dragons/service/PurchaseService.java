@@ -22,18 +22,26 @@ public class PurchaseService {
 	}
 
 	public void tryBuyHealingPotion(GameState gameState) {
-		if (gameState.getLives() == 1 && gameState.getGold() >= 50) {
-			log.info("Considering buying healing potion...");
-
-			List<ShopItem> items = client.fetchShopItems(gameState.getGameId());
-			items.stream()
-					.filter(item -> "hpot".equals(item.getId()) && item.getCost() <= gameState.getGold())
-					.findFirst()
-					.ifPresent(item -> {
-						PurchaseResult result = client.buyItem(gameState.getGameId(), item.getId());
-						log.info("Bought item '{}', remaining gold: {}", item.getName(), result.getGold());
-						gameState.updateFrom(result);
-					});
+		if (gameState.getLives() <= 2 && gameState.getGold() >= 50) {
+			tryBuyItem(gameState, "hpot");
 		}
+	}
+
+	public void tryBuyTricks(GameState gameState) {
+		if (gameState.getGold() >= 250) {
+			tryBuyItem(gameState, "tricks");
+		}
+	}
+
+	private void tryBuyItem(GameState gameState, String itemId) {
+		List<ShopItem> items = client.fetchShopItems(gameState.getGameId());
+		items.stream()
+				.filter(item -> itemId.equals(item.getId()) && item.getCost() <= gameState.getGold())
+				.findFirst()
+				.ifPresent(item -> {
+					PurchaseResult result = client.buyItem(gameState.getGameId(), item.getId());
+					log.info("🛍️Bought item '{}', remaining gold: {}", item.getName(), result.getGold());
+					gameState.updateFrom(result);
+				});
 	}
 }

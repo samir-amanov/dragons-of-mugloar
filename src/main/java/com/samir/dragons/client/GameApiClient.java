@@ -53,7 +53,7 @@ public class GameApiClient {
 			log.debug("Fetched {} ads", ads != null ? ads.length : 0);
 			return safeList(ads);
 		} catch (RestClientException e) {
-			log.error("Failed to fetch messages for gameId={}", gameId, e);
+			log.error("Failed to fetch messages for gameId={}", gameId);
 			return Collections.emptyList();
 		}
 	}
@@ -65,7 +65,7 @@ public class GameApiClient {
 			log.debug("Attempted to solve ad: {}, Result: {}", adId, result);
 			return result;
 		} catch (RestClientException e) {
-			log.error("Failed to solve adId={} for gameId={}", adId, gameId, e);
+			log.error("Failed to solve adId={} for gameId={}", adId, gameId);
 			return null;
 		}
 	}
@@ -77,7 +77,7 @@ public class GameApiClient {
 			log.debug("Fetched shop items: {}", items != null ? items.length : 0);
 			return safeList(items);
 		} catch (RestClientException e) {
-			log.error("Failed to fetch shop items for gameId={}", gameId, e);
+			log.error("Failed to fetch shop items for gameId={}", gameId);
 			return Collections.emptyList();
 		}
 	}
@@ -89,7 +89,7 @@ public class GameApiClient {
 			log.info("Purchased item: {} -> {}", itemId, result);
 			return result;
 		} catch (RestClientException e) {
-			log.error("Failed to purchase itemId={} for gameId={}", itemId, gameId, e);
+			log.error("Failed to purchase itemId={} for gameId={}", itemId, gameId);
 			return null;
 		}
 	}
@@ -101,7 +101,7 @@ public class GameApiClient {
 			log.debug("Investigated reputation: {}", reputation);
 			return reputation;
 		} catch (RestClientException e) {
-			log.error("Failed to investigate reputation for gameId={}", gameId, e);
+			log.error("Failed to investigate reputation for gameId={}", gameId);
 			return null;
 		}
 	}
