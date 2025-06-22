@@ -1,5 +1,7 @@
 package com.samir.dragons.service.game;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.samir.dragons.client.GameApiClient;
@@ -16,9 +18,11 @@ public class GameService {
 	private final GameApiClient client;
 	private final GameLoopManager gameLoopManager;
 
+	Logger summaryLogger = LoggerFactory.getLogger("summary");
+
 	public void runGameLoop() {
 		GameState gameState = client.startNewGame();
-		log.info("🎯 New game started: {}", gameState.getGameId());
+		summaryLogger.info("⌛ New game started: {}. Wait for results.", gameState.getGameId());
 
 		gameLoopManager.run(gameState);
 
@@ -26,11 +30,10 @@ public class GameService {
 	}
 
 	private void printGameSummary(GameState gameState) {
-		log.info("🏁 Game Over");
+		log.info("🏁 Game Finished: {}", gameState.getGameId());
 		log.info("📈 Final Score: {}", gameState.getScore());
-		log.info("🎖️ High Score: {}", gameState.getHighScore());
-		log.info("💰 Gold Left: {}", gameState.getGold());
-		log.info("🩸 Lives Remaining: {}", gameState.getLives());
 		log.info("🔁 Turns Played: {}", gameState.getTurn());
+
+		summaryLogger.info("\n🎯️ Game Finished: {}, Final Score {}", gameState.getGameId(), gameState.getScore());
 	}
 }
