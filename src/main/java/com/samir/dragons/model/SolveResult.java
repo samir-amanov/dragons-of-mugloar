@@ -1,8 +1,10 @@
 package com.samir.dragons.model;
 
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 public class SolveResult {
 
 	private boolean success;
@@ -12,12 +14,4 @@ public class SolveResult {
 	private int highScore;
 	private int turn;
 	private String message;
-
-	public void updateFrom(SolveResult result) {
-		this.lives = result.getLives();
-		this.gold = result.getGold();
-		this.score = result.getScore();
-		this.highScore = result.getHighScore();
-		this.turn = result.getTurn();
-	}
 }

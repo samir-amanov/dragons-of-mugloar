@@ -15,7 +15,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.samir.dragons.model.Ad;
 import com.samir.dragons.model.GameState;
 import com.samir.dragons.model.PurchaseResult;
-import com.samir.dragons.model.Reputation;
 import com.samir.dragons.model.ShopItem;
 import com.samir.dragons.model.SolveResult;
 
@@ -90,18 +89,6 @@ public class GameApiClient {
 			return result;
 		} catch (RestClientException e) {
 			log.error("Failed to purchase itemId={} for gameId={}", itemId, gameId);
-			return null;
-		}
-	}
-
-	public Reputation investigateReputation(String gameId) {
-		try {
-			URI uri = buildUri("/" + gameId + "/investigate/reputation");
-			Reputation reputation = restTemplate.postForObject(uri, null, Reputation.class);
-			log.debug("Investigated reputation: {}", reputation);
-			return reputation;
-		} catch (RestClientException e) {
-			log.error("Failed to investigate reputation for gameId={}", gameId);
 			return null;
 		}
 	}

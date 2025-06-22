@@ -14,15 +14,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class AdSelectionService {
 
-	private static final Map<String, Double> PROBABILITY_MULTIPLIERS = Map.of(
-			"Sure thing", 1.0,
-			"Piece of cake", 0.95,
-			"Walk in the park", 0.9,
-			"Quite likely", 0.75,
-			"Hmmm....", 0.5,
-			"Rather detrimental", 0.3,
-			"Playing with fire", 0.2,
-			"Suicide mission", 0.1
+	private static final Map<String, Double> PROBABILITY_MULTIPLIERS = Map.ofEntries(
+			Map.entry("Sure thing", 1.0),
+			Map.entry("Piece of cake", 0.9),
+			Map.entry("Walk in the park", 0.8),
+			Map.entry("Quite likely", 0.7),
+			Map.entry("Hmmm....", 0.6),
+			Map.entry("Rather detrimental", 0.5),
+			Map.entry("Risky", 0.4),
+			Map.entry("Gamble", 0.3),
+			Map.entry("Playing with fire", 0.2),
+			Map.entry("Suicide mission", 0.1),
+			Map.entry("Impossible", 0.01)
 	);
 
 	private static final double HIGH_PROBABILITY = 0.5;

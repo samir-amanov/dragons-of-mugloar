@@ -1,9 +1,5 @@
 package com.samir.dragons.service.game;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import com.samir.dragons.client.GameApiClient;
@@ -15,17 +11,10 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class GameService implements ApplicationContextAware {
+public class GameService {
 
 	private final GameApiClient client;
 	private final GameLoopManager gameLoopManager;
-
-	private ApplicationContext context;
-
-	@Override
-	public void setApplicationContext(@NonNull ApplicationContext applicationContext) {
-		this.context = applicationContext;
-	}
 
 	public void runGameLoop() {
 		GameState gameState = client.startNewGame();
@@ -34,7 +23,6 @@ public class GameService implements ApplicationContextAware {
 		gameLoopManager.run(gameState);
 
 		printGameSummary(gameState);
-		SpringApplication.exit(context, () -> 0);
 	}
 
 	private void printGameSummary(GameState gameState) {

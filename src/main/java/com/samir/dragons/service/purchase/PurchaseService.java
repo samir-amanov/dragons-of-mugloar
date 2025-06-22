@@ -28,9 +28,6 @@ public class PurchaseService {
 		if (gameState.getGold() >= 250) {
 			buyItem(gameState, "wingpot");
 		}
-		if (gameState.getGold() >= 450) {
-			buyItem(gameState, "rf");
-		}
 	}
 
 	private void buyItem(GameState gameState, String itemId) {
