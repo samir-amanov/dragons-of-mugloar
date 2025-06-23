@@ -18,12 +18,12 @@ public class AdSelectionService {
 			Map.entry("Sure thing", 1.0),
 			Map.entry("Piece of cake", 0.9),
 			Map.entry("Walk in the park", 0.8),
-			Map.entry("Quite likely", 0.7),
-			Map.entry("Hmmm....", 0.6),
-			Map.entry("Rather detrimental", 0.5),
-			Map.entry("Risky", 0.4),
-			Map.entry("Gamble", 0.3),
-			Map.entry("Playing with fire", 0.2),
+			Map.entry("Quite likely", 0.4),
+			Map.entry("Hmmm....", 0.35),
+			Map.entry("Rather detrimental", 0.3),
+			Map.entry("Risky", 0.25),
+			Map.entry("Gamble", 0.2),
+			Map.entry("Playing with fire", 0.15),
 			Map.entry("Suicide mission", 0.1),
 			Map.entry("Impossible", 0.01)
 	);
@@ -31,7 +31,7 @@ public class AdSelectionService {
 	private static final double HIGH_PROBABILITY = 0.5;
 	private static final double MODERATE_PROBABILITY = 0.25;
 	private static final double LESS_PROBABILITY = 0.00;
-	private static final double HELPING_MULTIPLIER = 1.1;
+	private static final double HELPING_MULTIPLIER = 1.5;
 
 	public List<Ad> selectAdsWithHighProbability(List<Ad> ads) {
 		return selectAds(ads, HIGH_PROBABILITY);

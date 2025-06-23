@@ -1,5 +1,6 @@
 <configuration>
 	<property name="LOG_DIR" value="logs"/>
+	<timestamp key="logTimestamp" datePattern="yyyy-MM-dd_HH-mm-ss"/>
 
 	<appender name="SIFT" class="ch.qos.logback.classic.sift.SiftingAppender">
 		<discriminator class="ch.qos.logback.classic.sift.MDCBasedDiscriminator">
@@ -9,7 +10,7 @@
 
 		<sift>
 			<appender name="FILE-${runId}" class="ch.qos.logback.core.FileAppender">
-				<file>${LOG_DIR}/thread-${runId}.log</file>
+				<file>${LOG_DIR}/thread-${runId}-${logTimestamp}.log</file>
 				<append>false</append>
 				<encoder>
 					<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>

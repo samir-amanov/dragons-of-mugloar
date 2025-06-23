@@ -1,10 +1,12 @@
-package com.samir.dragons.runner;
+package com.samir.dragons.service.game;
+
+import static com.samir.dragons.util.Printer.printFinalInfo;
 
 import java.util.Arrays;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
-import com.samir.dragons.service.game.GameService;
+import com.samir.dragons.model.GameState;
 
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,12 +15,12 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ParallelRunner {
+public class GameParallelRunner {
 
 	private final GameService gameService;
 	private final int parallelRuns;
 
-	public ParallelRunner(GameService gameService, @Value("${dragons.parallel-runs}") int parallelRuns) {
+	public GameParallelRunner(GameService gameService, @Value("${dragons.parallel-runs}") int parallelRuns) {
 		this.gameService = gameService;
 		this.parallelRuns = parallelRuns;
 	}
@@ -28,7 +30,11 @@ public class ParallelRunner {
 		if (isTestEnvironment())
 			return;
 
+		long startTime = System.nanoTime();
+
 		Thread[] threads = new Thread[parallelRuns];
+
+		ConcurrentLinkedQueue<GameState> results = new ConcurrentLinkedQueue<>();
 
 		for (int i = 0; i < parallelRuns; i++) {
 			final int threadId = i;
@@ -36,9 +42,10 @@ public class ParallelRunner {
 				String runId = "run-" + threadId;
 				MDC.put("runId", runId);
 				try {
-					gameService.runGameLoop();
+					GameState gameState = gameService.runGameLoop();
+					results.add(gameState);
 				} catch (Exception e) {
-					LoggerFactory.getLogger(ParallelRunner.class).error("Run {} failed: {}", threadId, e.getMessage(), e);
+					LoggerFactory.getLogger(GameParallelRunner.class).error("Run {} failed: {}", threadId, e.getMessage(), e);
 				} finally {
 					MDC.clear();
 				}
@@ -49,8 +56,7 @@ public class ParallelRunner {
 			thread.join();
 		}
 
-		Logger summaryLogger = LoggerFactory.getLogger("summary");
-		summaryLogger.info("\n✅ All {} game loops completed. See logs in /logs/", parallelRuns);
+		printFinalInfo(results, startTime, parallelRuns);
 		System.exit(0);
 	}
 

@@ -30,12 +30,12 @@ public class GameLoopManager {
 	private final PurchaseService purchaseService;
 
 	public void run(GameState gameState) {
-		Set<String> solvedAdIds = new HashSet<>();
+		Set<String> alreadyTriedAdIds = new HashSet<>();
 
 		while (!gameState.isGameOver()) {
 			try {
 				List<Ad> fetchedAds = client.fetchMessages(gameState.getGameId()).stream()
-						.filter(ad -> !solvedAdIds.contains(ad.getAdId()))
+						.filter(ad -> !alreadyTriedAdIds.contains(ad.getAdId()))
 						.toList();
 
 				List<Ad> encryptedAds = fetchedAds.stream()
@@ -55,6 +55,7 @@ public class GameLoopManager {
 
 				while (!adQueue.isEmpty()) {
 					Ad ad = adQueue.removeFirst();
+					alreadyTriedAdIds.add(ad.getAdId());
 
 					log.info("➡️ Solving ad: [{}] '{}' with reward {} and probability '{}'",
 							ad.getAdId(), ad.getMessage(), ad.getReward(), ad.getProbability());
@@ -67,8 +68,6 @@ public class GameLoopManager {
 						log.info("✅ Success {}, Score: {}, Lives: {}, Message: {}, Gold {}",
 								result.isSuccess(), result.getScore(), result.getLives(), result.getMessage(), result.getGold());
 					}
-
-					solvedAdIds.add(ad.getAdId());
 
 					if (gameState.isGameOver())
 						break;
