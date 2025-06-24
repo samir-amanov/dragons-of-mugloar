@@ -25,7 +25,8 @@ _A Spring Boot app which plays Dragons of Mugloar game and tries to reach at lea
 * Number of parallel runs given in application.properties file (5 by default):
 > dragons.parallel-runs=5
 * Prints game results to the console. Example:
+
 ![img.png](img.png)
-* Adds detailed logs separated by thread to the /logs folder
+* Adds detailed logs separated by thread to the /logs folder. Example:
 
 ![img_1.png](img_1.png)
