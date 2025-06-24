@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  dragons:
+    container_name: dragons-game
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: dragons-game:latest
+    restart: "no"
+    volumes:
+      - ./logs:/app/logs

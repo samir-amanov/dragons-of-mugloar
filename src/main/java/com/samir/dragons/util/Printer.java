@@ -22,7 +22,7 @@ public class Printer {
 		double winRate = (double) wins / parallelRuns * 100.0;
 		summaryLogger.info("\n✅ All {} game loops completed in {} seconds. See details in /logs/",
 				parallelRuns, totalDuration);
-		summaryLogger.info("Won {} of {} games. Win percentage is: {}", wins, parallelRuns, String.format("%.2f", winRate));
+		summaryLogger.info("\nWon {} of {} games. Win percentage is: {} \n", wins, parallelRuns, String.format("%.2f", winRate));
 	}
 
 	public static void printStart(GameState gameState) {
