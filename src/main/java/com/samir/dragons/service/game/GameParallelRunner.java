@@ -27,8 +27,10 @@ public class GameParallelRunner {
 
 	@EventListener(ApplicationReadyEvent.class)
 	public void runParallelGames() throws InterruptedException {
-		if (isTestEnvironment())
-			return;
+		runParallelGamesNow();
+	}
+
+	public void runParallelGamesNow() throws InterruptedException {
 
 		long startTime = System.nanoTime();
 
@@ -57,7 +59,9 @@ public class GameParallelRunner {
 		}
 
 		printFinalInfo(results, startTime, parallelRuns);
-		System.exit(0);
+		if (!isTestEnvironment()) {
+			System.exit(0);
+		}
 	}
 
 	boolean isTestEnvironment() {

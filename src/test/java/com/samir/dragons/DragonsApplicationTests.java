@@ -10,4 +10,9 @@ class DragonsApplicationTests {
 	void contextLoads() {
 	}
 
+	@Test
+	void main_runsWithoutException() {
+		String[] args = {};
+		DragonsApplication.main(args);
+	}
 }
